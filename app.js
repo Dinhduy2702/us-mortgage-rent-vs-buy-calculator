@@ -17,7 +17,7 @@
     ["MD", "Maryland", 1.00], ["MA", "Massachusetts", 1.12], ["MI", "Michigan", 1.32], ["MN", "Minnesota", 1.05],
     ["MS", "Mississippi", 0.75], ["MO", "Missouri", 0.91], ["MT", "Montana", 0.74], ["NE", "Nebraska", 1.54],
     ["NV", "Nevada", 0.50], ["NH", "New Hampshire", 1.77], ["NJ", "New Jersey", 2.23], ["NM", "New Mexico", 0.72],
-    ["NY", "New York", 1.62], ["NC", "North Carolina", 0.73], ["ND", "North Dakota", 0.98], ["OH", "Ohio", 1.43],
+    ["NY", "New York", 1.40], ["NC", "North Carolina", 0.73], ["ND", "North Dakota", 0.98], ["OH", "Ohio", 1.43],
     ["OK", "Oklahoma", 0.85], ["OR", "Oregon", 0.86], ["PA", "Pennsylvania", 1.38], ["RI", "Rhode Island", 1.35],
     ["SC", "South Carolina", 0.53], ["SD", "South Dakota", 1.08], ["TN", "Tennessee", 0.56], ["TX", "Texas", 1.63],
     ["UT", "Utah", 0.52], ["VT", "Vermont", 1.78], ["VA", "Virginia", 0.76], ["WA", "Washington", 0.84],
