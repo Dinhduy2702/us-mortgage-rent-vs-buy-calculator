@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HomeMath US: 2026 Mortgage Payment, PMI Auto-Drop, Rent vs. Buy &amp; Refinance Calculator</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230F766E'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Georgia,serif' font-weight='700' font-size='34' fill='%23FFFFFF'%3EH%3C/text%3E%3C/svg%3E">
+  <meta name="description" content="Free 2026 US Mortgage &amp; Rent vs. Buy Calculator: true monthly PITI + 50-state property taxes + PMI auto-drop at 80% LTV + 30-year amortization chart, Rent vs. Buy vs. S&amp;P 500 brutal math (5/10/30 yr), and Refinance Break-Even + Extra Payment payoff.">
+  <meta property="og:title" content="HomeMath US — 2026 Mortgage, Rent vs. Buy &amp; Refinance Calculator">
+  <meta property="og:description" content="Calculate true monthly mortgage cost with 50-state property tax &amp; PMI auto-drop, run Rent vs. Buy vs. S&amp;P 500 brutal math, and find your exact Refinance Break-Even month.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand-link" href="#mortgage">
+        <span class="brand-badge" aria-hidden="true">H</span>
+        <span style="min-width:0;">
+          <span class="brand-title" id="brandNameText">HomeMath US</span>
+          <span class="brand-sub" id="brandSubText">2026 Mortgage, Rent vs. Buy &amp; Refi Planner</span>
+        </span>
+      </a>
+
+      <div class="header-meta">
+        <a class="btn btn-sm hide-xs" href="https://dinhduy2702.github.io/us-finance-toolkit-hub/" target="_blank" rel="noopener noreferrer">All Tools Hub</a>
+        <a class="btn btn-sm hide-xs" href="https://dinhduy2702.github.io/us-propyield-analyzer/" target="_blank" rel="noopener noreferrer">PropYield</a>
+        <a class="btn btn-sm hide-xs" href="https://dinhduy2702.github.io/us-smart-money-calculators/" target="_blank" rel="noopener noreferrer">SmartMoney</a>
+        <button type="button" class="btn btn-sm" id="themeToggleBtn" aria-label="Switch color theme">Dark Mode</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="tool-nav-wrap">
+    <div class="container">
+      <nav class="tool-nav" role="tablist" aria-label="Mortgage and homebuying calculators">
+        <button type="button" class="tool-tab" role="tab" id="tab-mortgage" aria-controls="panel-mortgage" aria-selected="true" data-tool="mortgage">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V20h14V9.5"/><path d="M9 20v-6h6v6"/></svg>
+          Mortgage &amp; PMI Auto-Drop
+        </button>
+        <button type="button" class="tool-tab" role="tab" id="tab-rentbuy" aria-controls="panel-rentbuy" aria-selected="false" data-tool="rentbuy">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          Rent vs. Buy Brutal Math
+        </button>
+        <button type="button" class="tool-tab" role="tab" id="tab-refi" aria-controls="panel-refi" aria-selected="false" data-tool="refi">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Refinance &amp; Extra Payoff
+        </button>
+      </nav>
+    </div>
+  </div>
+
+  <main class="container">
+    <section class="page-intro">
+      <div>
+        <h1 class="page-title" id="activeToolHeading">2026 US Mortgage Payment &amp; True Monthly Cost Calculator</h1>
+        <p class="page-desc" id="activeToolDesc">
+          Calculate true all-in monthly housing cost — Principal &amp; Interest, 50-state property tax, homeowners insurance, HOA, and PMI that automatically drops off once LTV hits 80%.
+        </p>
+      </div>
+      <div class="intro-actions">
+        <button type="button" class="btn btn-primary btn-sm" id="shareLinkBtn">Share<span class="hide-xs"> Link</span></button>
+        <button type="button" class="btn btn-sm" id="copyScenarioBtn">Copy<span class="hide-xs"> Summary</span></button>
+        <button type="button" class="btn btn-sm" id="printReportBtn">Print<span class="hide-xs"> / PDF</span></button>
+        <button type="button" class="btn btn-sm" id="resetDefaultsBtn">Reset</button>
+      </div>
+    </section>
+
+    <section class="presets-bar" aria-label="Quick example scenarios">
+      <span class="presets-label">Try a scenario:</span>
+      <div class="presets-chips" id="quickPresetsRow"></div>
+    </section>
+
+    <!-- TAB 1: 2026 MORTGAGE PAYMENT & PMI AUTO-DROP -->
+    <section class="calc-panel" id="panel-mortgage" role="tabpanel" aria-labelledby="tab-mortgage">
+      <div class="calc-grid">
+        <div class="card">
+          <h2 class="card-heading">2026 Home &amp; Loan Inputs</h2>
+          <p class="card-sub">Select your US state to auto-load 2026 average property tax rates; PMI drops automatically when Loan-to-Value reaches 80%.</p>
+
+          <div class="form-stack">
+            <div class="field-row-2">
+              <div class="field">
+                <label for="mgPrice">Home Purchase Price ($)</label>
+                <input class="input-box tabular" type="number" id="mgPrice" min="50000" max="15000000" step="5000" value="435000">
+              </div>
+              <div class="field">
+                <label for="mgDownPct">Down Payment (%)</label>
+                <input class="input-box tabular" type="number" id="mgDownPct" min="0" max="80" step="0.5" value="10">
+              </div>
+            </div>
+
+            <div class="field-row-2">
+              <div class="field">
+                <label for="mgRate">Interest Rate (% APR)</label>
+                <input class="input-box tabular" type="number" id="mgRate" min="1" max="15" step="0.125" value="6.5">
+              </div>
+              <div class="field">
+                <label for="mgTerm">Loan Term (Years)</label>
+                <select class="select-box" id="mgTerm">
+                  <option value="30" selected>30-Year Fixed</option>
+                  <option value="20">20-Year Fixed</option>
+                  <option value="15">15-Year Fixed</option>
+                  <option value="10">10-Year Fixed</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-row-2">
+              <div class="field">
+                <label for="mgState">US State / DC (Auto Prop. Tax)</label>
+                <select class="select-box" id="mgState"></select>
+              </div>
+              <div class="field">
+                <label for="mgPropTaxPct">Property Tax Rate (%/yr)</label>
+                <input class="input-box tabular" type="number" id="mgPropTaxPct" min="0" max="5" step="0.05" value="1.63">
+              </div>
+            </div>
+
+            <div class="field-row-3">
+              <div class="field">
+                <label for="mgIns">Home Ins. ($/yr)</label>
+                <input class="input-box tabular" type="number" id="mgIns" min="0" max="25000" step="100" value="2100">
+              </div>
+              <div class="field">
+                <label for="mgHoa">HOA ($/mo)</label>
+                <input class="input-box tabular" type="number" id="mgHoa" min="0" max="5000" step="25" value="75">
+              </div>
+              <div class="field">
+                <label for="mgPmiPct">PMI Rate (%/yr)</label>
+                <input class="input-box tabular" type="number" id="mgPmiPct" min="0" max="2.5" step="0.05" value="0.65">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card result-sticky" aria-live="polite">
+          <div class="hero-result-top">
+            <div>
+              <span class="result-label">True Monthly Payment (All-In PITI + PMI + HOA)</span>
+              <span class="result-big tabular" id="mgTotalMo">$0</span>
+              <div class="result-subline tabular" id="mgSubline">Loan: $0 · Drops to $0/mo once PMI falls off</div>
+            </div>
+            <span class="status-pill pass tabular" id="mgPmiBadge">PMI Status</span>
+          </div>
+
+          <div class="kpi-strip-4">
+            <div class="kpi-mini">
+              <span>Principal &amp; Interest</span>
+              <strong class="tabular" id="mgPiMo">$0/mo</strong>
+            </div>
+            <div class="kpi-mini">
+              <span>Prop. Tax &amp; Ins.</span>
+              <strong class="tabular" id="mgTaxInsMo">$0/mo</strong>
+            </div>
+            <div class="kpi-mini">
+              <span>Monthly PMI</span>
+              <strong class="tabular" id="mgPmiMo">$0/mo</strong>
+            </div>
+            <div class="kpi-mini">
+              <span>Total Interest Paid</span>
+              <strong class="tabular" id="mgTotalInt">$0</strong>
+            </div>
+          </div>
+
+          <div class="stack-bar-wrap">
+            <div class="stack-bar" id="mgStackBar"></div>
+            <div class="stack-legend" id="mgStackLegend"></div>
+          </div>
+
+          <div class="chart-wrap">
+            <div class="chart-title-row">
+              <span>Principal vs. Interest &amp; Loan Balance (Full Loan Term)</span>
+              <span style="font-size:0.74rem; color:var(--text-muted);">Teal: Principal · Amber: Interest · Line: Remaining Balance</span>
+            </div>
+            <div id="mgChartHost"></div>
+          </div>
+
+          <div class="insight-box" id="mgInsightBox"></div>
+          <div class="result-cta-card" data-result-cta="mortgage"></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 1rem;">
+        <div class="table-header-row">
+          <div>
+            <h2 class="card-heading">30-Year Amortization &amp; PMI Auto-Drop Schedule</h2>
+            <p class="card-sub">Year-by-year breakdown showing exact PMI drop-off year, annual interest vs. principal, and equity built.</p>
+          </div>
+          <button type="button" class="btn btn-sm" id="exportMgCsvBtn">Export CSV</button>
+        </div>
+        <div class="table-scroll">
+          <table class="snapshot-table">
+            <thead>
+              <tr>
+                <th>Year</th>
+                <th class="num">Principal Paid</th>
+                <th class="num">Interest Paid</th>
+                <th class="num">PMI Paid</th>
+                <th class="num">Ending Balance</th>
+                <th class="num">LTV %</th>
+              </tr>
+            </thead>
+            <tbody id="mgTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: RENT VS. BUY 2026 BRUTAL MATH -->
+    <section class="calc-panel" id="panel-rentbuy" role="tabpanel" aria-labelledby="tab-rentbuy" hidden>
+      <div class="calc-grid">
+        <div class="card">
+          <h2 class="card-heading">Rent vs. Buy Brutal Math Inputs</h2>
+          <p class="card-sub">Pit homeownership against renting + investing your down payment &amp; monthly savings into the S&amp;P 500 (8%–10%).</p>
+
+          <div class="form-stack">
+            <div class="field-row-2">
+              <div class="field">
+                <label for="rbHomePrice">Home Price ($)</label>
+                <input class="input-box tabular" type="number" id="rbHomePrice" min="100000" max="10000000" step="10000" value="500000">
+              </div>
+              <div class="field">
+                <label for="rbDownPct">Down Payment (%)</label>
+                <input class="input-box tabular" type="number" id="rbDownPct" min="3" max="60" step="1" value="20">
+              </div>
+            </div>
+
+            <div class="field-row-2">
+              <div class="field">
+                <label for="rbRate">Mortgage Rate (% APR)</label>
+                <input class="input-box tabular" type="number" id="rbRate" min="2" max="12" step="0.125" value="6.5">
+              </div>
+              <div class="field">
+                <label for="rbRent">Comparable Monthly Rent ($)</label>
+                <input class="input-box tabular" type="number" id="rbRent" min="500" max="25000" step="50" value="2400">
+              </div>
+            </div>
+
+            <div class="field-row-3">
+              <div class="field">
+                <label for="rbSpReturn">S&amp;P 500 Return (%)</label>
+                <input class="input-box tabular" type="number" id="rbSpReturn" min="2" max="15" step="0.5" value="9.0">
+              </div>
+              <div class="field">
+                <label for="rbApprec">Home Growth (%/yr)</label>
+                <input class="input-box tabular" type="number" id="rbApprec" min="0" max="10" step="0.5" value="3.5">
+              </div>
+              <div class="field">
+                <label for="rbRentGrowth">Rent Growth (%/yr)</label>
+                <input class="input-box tabular" type="number" id="rbRentGrowth" min="0" max="10" step="0.5" value="3.5">
+              </div>
+            </div>
+
+            <div class="field-row-2">
+              <div class="field">
+                <label for="rbCarryPct">Prop Tax + Ins + Maint (%/yr)</label>
+                <input class="input-box tabular" type="number" id="rbCarryPct" min="0.5" max="6" step="0.1" value="2.4">
+              </div>
+              <div class="field">
+                <label for="rbSellCostPct">Selling Agent / Closing (%)</label>
+                <input class="input-box tabular" type="number" id="rbSellCostPct" min="0" max="10" step="0.5" value="6.0">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card result-sticky" aria-live="polite">
+          <div class="hero-result-top">
+            <div>
+              <span class="result-label">10-Year Net Worth Winner (After 6% Selling Costs)</span>
+              <span class="result-big tabular" id="rbWinnerHero">Renting Wins</span>
+              <div class="result-subline tabular" id="rbWinnerSub">Break-Even Year: Year --</div>
+            </div>
+            <span class="status-pill pass tabular" id="rbBreakEvenBadge">Break-Even</span>
+          </div>
+
+          <div class="kpi-strip-4">
+            <div class="kpi-mini">
+              <span>Year 5 Gap</span>
+              <strong class="tabular" id="rbGap5">$0</strong>
+            </div>
+            <div class="kpi-mini">
+              <span>Year 10 Gap</span>
+              <strong class="tabular" id="rbGap10">$0</strong>
+            </div>
+            <div class="kpi-mini">
+              <span>Year 30 Gap</span>
+              <strong class="tabular" id="rbGap30">$0</strong>
+            </div>
+            <div class="kpi-mini">
+              <span>Year 1 Monthly Diff</span>
+              <strong class="tabular" id="rbMoDiff">$0/mo</strong>
+            </div>
+          </div>
+
+          <div class="insight-box" id="rbInsightBox"></div>
+          <div class="result-cta-card" data-result-cta="rentbuy"></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 1rem;">
+        <div class="table-header-row">
+          <div>
+            <h2 class="card-heading">Net Worth Showdown: Buying a Home vs. Renting + S&amp;P 500</h2>
+            <p class="card-sub">Buyer Net Equity (Home Value − Loan Balance − 6% Selling Costs) vs. Renter S&amp;P 500 Portfolio (Down Payment + Closing Costs + Monthly Cash-Flow Difference compounded).</p>
+          </div>
+          <button type="button" class="btn btn-sm" id="exportRbCsvBtn">Export CSV</button>
+        </div>
+        <div class="table-scroll">
+          <table class="snapshot-table">
+            <thead>
+              <tr>
+                <th>Horizon</th>
+                <th class="num">Buyer Net Equity</th>
+                <th class="num">Renter S&amp;P 500 Portfolio</th>
+                <th class="num">Net Worth Difference</th>
+                <th class="num">Winner</th>
+              </tr>
+            </thead>
+            <tbody id="rbTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: REFINANCE BREAK-EVEN & EXTRA PAYMENT PAYOFF -->
+    <section class="calc-panel" id="panel-refi" role="tabpanel" aria-labelledby="tab-refi" hidden>
+      <div class="calc-grid">
+        <div class="card">
+          <h2 class="card-heading">Refinance &amp; Extra Principal Inputs</h2>
+          <p class="card-sub">Test whether refinancing beats your current rate after closing costs — and see how much interest extra monthly principal destroys.</p>
+
+          <div class="form-stack">
+            <div class="field-row-2">
+              <div class="field">
+                <label for="rfBalance">Current Loan Balance ($)</label>
+                <input class="input-box tabular" type="number" id="rfBalance" min="25000" max="10000000" step="5000" value="400000">
+              </div>
+              <div class="field">
+                <label for="rfCurRate">Current Rate (% APR)</label>
+                <input class="input-box tabular" type="number" id="rfCurRate" min="2" max="15" step="0.125" value="7.25">
+              </div>
+            </div>
+
+            <div class="field-row-2">
+              <div class="field">
+                <label for="rfCurYrs">Remaining Years on Current Loan</label>
+                <input class="input-box tabular" type="number" id="rfCurYrs" min="1" max="30" step="1" value="28">
+              </div>
+              <div class="field">
+                <label for="rfNewRate">New Refinance Rate (% APR)</label>
+                <input class="input-box tabular" type="number" id="rfNewRate" min="2" max="12" step="0.125" value="5.875">
+              </div>
+            </div>
+
+            <div class="field-row-3">
+              <div class="field">
+                <label for="rfNewTerm">New Term (Yrs)</label>
+                <select class="select-box" id="rfNewTerm">
+                  <option value="30" selected>30 Years</option>
+                  <option value="20">20 Years</option>
+                  <option value="15">15 Years</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="rfClosing">Refi Closing ($)</label>
+                <input class="input-box tabular" type="number" id="rfClosing" min="0" max="50000" step="250" value="4500">
+              </div>
+              <div class="field">
+                <label for="rfExtra">Extra Principal ($/mo)</label>
+                <input class="input-box tabular" type="number" id="rfExtra" min="0" max="10000" step="50" value="250">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card result-sticky" aria-live="polite">
+          <div class="hero-result-top">
+            <div>
+              <span class="result-label">Total Interest Saved (Refi + Extra Principal)</span>
+              <span class="result-big tabular" id="rfTotalSaved">$0</span>
+              <div class="result-subline tabular" id="rfSubline">Refi Break-Even: -- months · Shaves -- yrs off payoff</div>
+            </div>
+            <span class="status-pill pass tabular" id="rfBadge">Refi Break-Even</span>
+          </div>
+
+          <div class="kpi-strip-4">
+            <div class="kpi-mini">
+              <span>Current P&amp;I</span>
+              <strong class="tabular" id="rfCurMo">$0/mo</strong>
+            </div>
+            <div class="kpi-mini">
+              <span>New Refi P&amp;I</span>
+              <strong class="tabular" id="rfNewMo">$0/mo</strong>
+            </div>
+            <div class="kpi-mini">
+              <span>Monthly Relief</span>
+              <strong class="tabular" id="rfMoDelta">$0/mo</strong>
+            </div>
+            <div class="kpi-mini">
+              <span>Time Shaved Off</span>
+              <strong class="tabular" id="rfTimeSaved">0 yrs</strong>
+            </div>
+          </div>
+
+          <div class="insight-box" id="rfInsightBox"></div>
+          <div class="result-cta-card" data-result-cta="refi"></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 1rem;">
+        <div class="table-header-row">
+          <div>
+            <h2 class="card-heading">3-Way Payoff Comparison: Keep Loan vs. Refinance vs. Refi + Extra Principal</h2>
+            <p class="card-sub">Compare monthly P&amp;I, payoff timeline, closing costs, and lifetime interest side by side.</p>
+          </div>
+          <button type="button" class="btn btn-sm" id="exportRfCsvBtn">Export CSV</button>
+        </div>
+        <div class="table-scroll">
+          <table class="snapshot-table">
+            <thead>
+              <tr>
+                <th>Payoff Strategy</th>
+                <th class="num">Monthly Outflow</th>
+                <th class="num">Payoff Time</th>
+                <th class="num">Total Interest + Fees</th>
+                <th class="num">Net Savings vs. Keep</th>
+              </tr>
+            </thead>
+            <tbody id="rfTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIVE GUMROAD TOOLKITS & ECOSYSTEM -->
+    <section class="offers-section" aria-label="2026 Homebuyer & Investor Spreadsheets">
+      <div class="offers-head">
+        <h2>Pair HomeMath US with Our 2026 Google Sheets Operating Systems</h2>
+        <span style="font-size:0.8rem; color:var(--text-muted);">Live on Gumroad · Zero Monthly Subscriptions</span>
+      </div>
+      <div class="offers-grid" id="offersGrid"></div>
+
+      <div class="ecosystem-bar">
+        <div>
+          <strong>Explore All 8 Free US Finance &amp; Real Estate Calculators</strong>
+          <div style="font-size:0.84rem; color:var(--text-secondary); margin-top:0.2rem;">
+            Jump to US SmartMoney Hub, 50-state paycheck, rental BRRRR, capital gains, equity offer, or FIRE planners.
+          </div>
+        </div>
+        <div class="eco-links" id="ecoLinksContainer"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <strong>Educational Disclaimer:</strong> HomeMath US provides 2026 mortgage, PMI, rent-vs-buy, and refinance math estimates for educational planning only. Actual lender APRs, closing costs, county property tax assessments, homeowners insurance, and S&amp;P 500 returns vary over time.
+    </div>
+  </footer>
+
+  <div class="toast" id="toastBox" hidden role="status" aria-live="polite"></div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
